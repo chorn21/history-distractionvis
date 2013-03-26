@@ -1,14 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+<head>
+    <script src="lib/dsp.js"></script>
+    <script src="lib/d3.v3.js"></script>
+    <script src="js/application.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/input_audio_source.js"></script>
+    <script src="js/spectrum_analyzer.js"></script>
+    <script src="js/spectrum_analyzer_view.js"></script>
+    <script src="js/url_audio_source.js"></script>
+    <script type="text/javascript" src="lib/d3.v3.js"></script>
         <meta charset="utf-8">
-        <title>D3 Test</title>
-        <script type="text/javascript" src="d3/d3.v3.js"></script>
-    </head>
-    <body>
+        <title>distractionvis</title>
+    <style>
+        body { background: #888; padding:0 2em 2em 2em; }
+        h1, h2, h3, h4, a, p { color: #ddd; font-family: 'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif; }
+        #loader { padding: 3em; display:none; }
+        #spectrum_analyzer { border: 1px solid #666; height:500px; width:1024px; display:none; }
+        #time { padding: 1em; font-family: Helvetica; color:#666;}
+        #loading { padding: 1em; }
+        #controls { display:none; clear:both; }
+        #buttons { padding-right:1em; }
+        #sliders { margin-left:2em; }
+        .slider { margin-right:1.3em; }
+        .button#play { width:4em; }
+        input[type=range] { width:10em; -webkit-appearance: none; background-color: #222; border:1px solid #666; padding:0.2em; }
+        #audioUrl { width: 500px; }
+    </style>
+</head>
+<body onload="setInterval('updateClock()', 200);">
+  <div role="main">
+    <div id="header">
+        <h1>listen to how productive you are</h1>
+    </div>
+    <h4>HTML5 Audio / <a href="http://d3js.org">d3.js</a></h3>
+    <img src="http://placehold.it/1200x400" />
+    <div id="spectrum_analyzer">
+      <img id="loader" src="img/loader.gif" />
+    </div>
+    <h1 id="clock"></h1>
         <script type="text/javascript">
-            d3.select("body").append("p").text("New paragraph!");
+            // This function gets the current time and injects it into the DOM
+            function updateClock() {
+                // Gets the current time
+                var now = new Date();
+ 
+                // Get the hours, minutes and seconds from the current time
+                var hours = now.getHours();
+                var minutes = now.getMinutes();
+                var seconds = now.getSeconds();
+ 
+                // Format hours, minutes and seconds
+                if (hours < 10) {
+                    hours = "0" + hours;
+                }
+                if (minutes < 10) {
+                    minutes = "0" + minutes;
+                }
+                if (seconds < 10) {
+                    seconds = "0" + seconds;
+                }
+ 
+                // Gets the element we want to inject the clock into
+                var elem = document.getElementById('clock');
+ 
+                // Sets the elements inner HTML value to our clock data
+                elem.innerHTML = 'time: ' + hours + ':' + minutes + ':' + seconds;
+            }
         </script>
-        <p>New Paragraph with p</p>
-    </body>
-</html> 
+    <div id="controls">
+      <p>
+        <span id="buttons">
+          <input id="play" class="button" type="button" onclick="Application.togglePlay();" value="Play">
+        </span>
+        <span id="sliders">
+          Resolution: <input class="slider" type="range" min="1" max="48" value="48" onchange="Application.setResolution(this);">
+        </span>
+      </p>
+    </div>
+  </div>
+</body>
+<script language="javascript">window.onload = Application.load();</script>
+</html>
