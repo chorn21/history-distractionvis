@@ -3,62 +3,105 @@
 <head>
     <script src="lib/dsp.js"></script>
     <script src="lib/d3.v3.js"></script>
-    <script src="js/application.js"></script>
-    <script src="js/audio.js"></script>
-    <script src="js/input_audio_source.js"></script>
-    <script src="js/spectrum_analyzer.js"></script>
-    <script src="js/spectrum_analyzer_view.js"></script>
-    <script src="js/url_audio_source.js"></script>
-        <meta charset="utf-8">
-        <title>distractionvis</title>
-    <style>
-        body { background: #888; padding:0 2em 2em 2em; }
-        h1, h2, h3, h4, a, p { color: #ddd; font-family: 'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif; }
-        #loader { padding: 3em; display:none; }
-        #spectrum_analyzer { border: 1px solid #666; height:500px; width:1024px; display:none; }
-        #time { padding: 1em; font-family: Helvetica; color:#666;}
-        #loading { padding: 1em; }
-        #controls { display:none; clear:both; }
-        #buttons { padding-right:1em; }
-        #sliders { margin-left:2em; }
-        .slider { margin-right:1.3em; }
-        .button#play { width:4em; }
-        input[type=range] { width:10em; -webkit-appearance: none; background-color: #222; border:1px solid #666; padding:0.2em; }
-        #audioUrl { width: 500px; }
-    </style>
+    <script src="js/spectrum.js"></script>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-2.3.0.min.css" />
+    <link rel="stylesheet" href="bootstrap/styling.css" />
+    <meta charset="utf-8">
+    <title>distractionvis</title>
 </head>
-<body onload="setInterval('updateClock()', 200);">
-  <div role="main">
-    <div id="header">
-        <h1>listen to how productive you are</h1>
-    </div>
-    <h4>HTML5 Audio / <a href="http://d3js.org">d3.js</a></h3>
+<body onload="setInterval('updateClock()', 200); setInterval('updateSpectrum()', 100);">
+    <div class="container">
+        <div class="row">
+            <div class="page-header">
+              <h1>distractEDU<small>listen to how productive you are</h1></small>
+            </div>
+        </div>
+        <div class="row">
+            <h3>HTML5 Audio / <a href="http://d3js.org">d3.js</a></h3>
+        </div>
+        <div class="row">
+            <h4>Month</h4>
+                <select id="month">
+                  <option value ="01">1</option>
+                  <option value="02">2</option>
+                  <option value="03">3</option>
+                  <option value="04">4</option>
+                  <option value="05">5</option>
+                  <option value="06">6</option>
+                  <option value="07">7</option>
+                  <option value="08">8</option>
+                  <option value="09">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
 
-    <audio id="audio-element"
-           src="media/piano_concerto.mp3"
-           controls="true"
-           style="width: 512px;"
-           type="audio/mpeg">
-    </audio>
+            <h4>Date</h4>
+                <select id="date">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25">25</option>
+                  <option value="26">26</option>
+                  <option value="27">27</option>
+                  <option value="28">28</option>
+                  <option value="29">29</option>
+                  <option value="30">30</option>
+                  <option value="31">31</option>
+                </select>
 
-    <div>
-        <canvas id="fft" width="512" height="200"></canvas>
-    </div>
-
-    <h1 id="clock"></h1>
-    <div id="controls">
-      <p>
-        <span id="buttons">
-          <input id="play" class="button" type="button" onclick="Application.togglePlay();" value="Play">
-        </span>
-        <span id="sliders">
-          Resolution: <input class="slider" type="range" min="1" max="48" value="48" onchange="Application.setResolution(this);">
-        </span>
-      </p>
+                <h4>Year</h4>
+                <select id="year">
+                </select>
+        </div>
+        <div class="row">
+            <button id="buttan" class="btn btn-large btn-primary" type="button">Play</button>
+        </div>
+        <div class="pagination pagination-centered">
+            <canvas id="fft" width="1024" height="150" style="visibility:hidden"></canvas>
+        </div>
+        <div class="row">
+            <h2 id="clock"></h2>
+        </div>
     </div>
   </div>
+  <audio id="concerto" src="media/piano_concerto.mp3"></audio>
+  <audio id="ambient" src="media/food-court-1.mp3"></audio>
+  <audio id="10" src="media/10.mp3"></audio>
+  <audio id="20" src="media/20.mp3"></audio>
+  <audio id="30" src="media/30.mp3"></audio>
+  <audio id="40" src="media/40.mp3"></audio>
+  <audio id="50" src="media/50.mp3"></audio>
+  <audio id="60" src="media/60.mp3"></audio>
+  <audio id="70" src="media/70.mp3"></audio>
+  <audio id="80" src="media/80.mp3"></audio>
+  <audio id="90" src="media/90.mp3"></audio>
+  </audio>
 </body>
 <script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="js/history_data.js"></script>
 <script type="text/javascript" src="js/distraction.js"></script>
+<script type="text/javascript" src="js/vis.js"></script>
 <script type="text/javascript" src="js/spectrum.js"></script>
 </html>

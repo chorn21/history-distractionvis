@@ -1,0 +1,11 @@
+/* ignoring domains and prefixes */
+
+facebook
+reddit
+tumblr
+twitter
+youtube
+last.fm
+imgur
+xkcd
+theonion
