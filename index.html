@@ -20,11 +20,17 @@
             <h3>HTML5 Audio / <a href="http://d3js.org">d3.js</a></h3>
           </div>-->
         <div class="row">
-          <div class="span6">Please select a start date no earlier than December 28, 2012.</div>
-          <div class="span6">Please select an end date no later than March 28, 2013.</div>
+          <div class="span6">Please select a start date no earlier than <span id="first">December 28, 2012</span>.</div>
+          <div class="span6">Please select an end date no later than <span id="last">March 28, 2013</span>.</div>
         </div>
         <div class="row">
           <div class="span6">
+            <h4>Start Year</h4>
+                <select id="startyear">
+                  <option value="2012">2012</option>
+                  <option value="2013">2013</option>
+                </select>
+
             <h4>Start Month</h4>
                 <select id="startmonth">
                   <option value ="01">1</option>
@@ -76,13 +82,14 @@
                   <option value="31">31</option>
                 </select>
 
-            <h4>Start Year</h4>
-                <select id="startyear">
+          </div>
+          <div class="span6">
+            <h4>End Year</h4>
+                <select id="endyear">
                   <option value="2012">2012</option>
                   <option value="2013">2013</option>
                 </select>
-          </div>
-          <div class="span6">
+
             <h4>End Month</h4>
                 <select id="endmonth">
                   <option value ="01">1</option>
@@ -134,11 +141,6 @@
                   <option value="31">31</option>
                 </select>
 
-            <h4>End Year</h4>
-                <select id="endyear">
-                  <option value="2012">2012</option>
-                  <option value="2013">2013</option>
-                </select>
           </div>
 
         </div>
