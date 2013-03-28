@@ -29,10 +29,14 @@ About the chrome history file: http://lowmanio.co.uk/blog/entries/how-google-chr
     comma deliminated.  Also, NULL values should result in an empty entry,
     ie `... URL: NULL ... => ,,`.  Finally, the column headers should be included
     as the files first line.
- 4. Run the python script located in `/history/chrome/chrome-history_standardize.py`
+ 4. From the project's root directory, run the python script located in
+    `/history/chrome/chrome-history_standardize.py` by using the command below
     on the output file.  This will create another output file
     `/history/chrome/output/YOUR-NAME.json`, which is a valid input to the
     visualization.  Note the script takes an input parameter `YOUR-NAME`.
+
+    python -m history.chrome.chrome-history_standardize YOUR-NAME
+
  5. If you want to combine input from mulitple browsers, run the python script
     located in `/history/history_collator.py`.  This will merge the history
     from each browser's YOUR-NAME.json, so it is necessary to run step 4 for all
