@@ -1,75 +1,64 @@
-$(function() {
 
-	var start = processTime(history[0]);
-	var end = processTime(history[history.length-1]);
-	var month = document.getElementById("month");
-	var date = document.getElementById("date");
-	var year = document.getElementById("year");
+function DistractionVis(hist, songLength) {
+	this.history = hist;
+	this.start = processTime(this.history[0]);
+	this.end = processTime(this.history[this.history.length-1]);
+	this.historyPeriod = processTime(history[history.length-1]).getTime() - processTime(history[0]).getTime();
+	this.averages = [];
+	this.intervals = [];
+	this.scale = d3.scale.linear().domain([this.start.getTime(), this.end.getTime()]).range([0, songLength]);
+}
 
-	var startYear = start.getFullYear();
-	var endYear = end.getFullYear();
+DistractionVis.prototype.setUpDOM = function(year) {
+	var startYear = this.start.getFullYear();
+	var endYear = this.end.getFullYear();
 	while(startYear <= endYear) {
 		$(year).append('<option value="'+startYear+'">'+startYear+'</option>');
 		startYear++;
 	}
+}
 
-	var historyPeriod = processTime(history[history.length-1]) - processTime(history[0]);
-	var songLength = 407; // length of song in seconds
-
-	var blockCount = 40; // can be adjusted
-	var blockAverages = [];
-	var blockLength = historyPeriod / blockCount;
-	var blockEnd = start + blockLength;
-
-	var intervals = [];
-	var index = 0;
+DistractionVis.prototype.playAudio = function(blockCount) {
+	var blockBound = this.start.getTime() + (this.historyPeriod / blockCount);
+	var blockLength = this.historyPeriod / blockCount;
 	var items = 0;
 	var distractionCount = 0;
+	var index = 0;
+	var waitTime = this.scale(blockLength);
 
-	var scale = d3.scale.linear().domain([start.getTime(), end.getTime()]).range([0, songLength]);
-
-	function calculateAverages() {
-		for(var i=0; i<history.length; i++) {
-			if(processTime(history[i]) < blockEnd) {
-				items++;
-				if(history[i].distraction) {
-					distractionCount++;
-				}
+	for(var i=0; i<this.history.length; i++) {
+		if(processTime(this.history[i]).getTime() < blockBound) {
+			items++;
+			if(this.history[i].distraction) {
+				distractionCount++;
 			}
-			else {
-				blockAverages[index] = distractionCount/items;
-				intervals[index] = processTime(history[i]);
-				index++;
-				items = 1;
-				distractionCount = history[i].distraction ? 1 : 0;
-			}
+		}
+		else {
+			this.averages[index] = distractionCount/items*100;
+			this.intervals[index] = processTime(this.history[i]).getTime();
+			index++;
+			items = 1;
+			distractionCount = this.history[i].distraction ? 1 : 0;
+			blockBound += blockLength;
 		}
 	}
 
-	function processTime(visit) {
-		var year = visit.time.substring(0,4);
-		var month = visit.time.substring(5,7);
-		var date = visit.time.substring(8,10);
-		var hour = visit.time.substring(11,13);
-		var minute = visit.time.substring(14,16);
-		var second = visit.time.substring(17, 19);
-		return new Date(year, month-1, date, hour, minute, second);
+	document.getElementById("concerto").play();
+	for(var i=0; i<this.averages.length; i++) {
+		setTimeout(function() {
+			var num = Math.floor(this.averages[i-1]/10)*10;
+			document.getElementById(num).play();
+		}, waitTime);
 	}
+}
 
-	function playAudio() {
-		var waitTime = scale(intervals[0]);
-		$("#concerto").play();
-		for(var i=0; i<blockAverages.length; i++) {
-			setTimeout(function() {
-				var num = Math.floor(blockAverages[i]/10)*10;
-				$("#"+num).play();
-			}, waitTime);
-		}
-	}
+function processTime(visit) {
+	var year = visit.time.substring(0,4);
+	var month = visit.time.substring(5,7);
+	var date = visit.time.substring(8,10);
+	var hour = visit.time.substring(11,13);
+	var minute = visit.time.substring(14,16);
+	var second = visit.time.substring(17, 19);
+	return new Date(year, month-1, date, hour, minute, second);
+}
 
-	$("#buttan").click(function() {
-		calculateAverages();
-		playAudio();
-	});
-
-});
