@@ -14,6 +14,7 @@ $(function() {
 
 	$("#buttan").click(function() {
 		vizzy.playAudio(blockCount);
+		document.getElementById("fft").style.visibility="visible";
 	});
 
 });
