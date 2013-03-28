@@ -16,6 +16,7 @@ $(function() {
 	var allHistory = document.getElementById("all-history");
 
 	$("#buttan").click(function() {
+		$("#loading").show();
 		if(allHistory.checked) {
 			vizzy = new DistractionVis(history, songLength, processTime(history[0]), processTime(history[history.length-1]), true);
 		}

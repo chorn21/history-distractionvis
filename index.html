@@ -13,11 +13,15 @@
     <div class="container">
         <div class="row">
             <div class="page-header">
-              <h1>distractEDU<small>listen to how productive you are</h1></small>
+              <h1>distractEDU <small>listen to how productive you are</small></h1>
             </div>
         </div>
-        <div class="row">
+        <!--<div class="row">
             <h3>HTML5 Audio / <a href="http://d3js.org">d3.js</a></h3>
+          </div>-->
+        <div class="row">
+          <div class="span6">Please select a start date no earlier than December 28, 2012.</div>
+          <div class="span6">Please select an end date no later than March 28, 2013.</div>
         </div>
         <div class="row">
           <div class="span6">
@@ -141,11 +145,14 @@
         <div class="row">
           <label class="checkbox">
             <input id="all-history" type="checkbox" />
-            Select entire history
+            Or, to visualize the entire available history, check this box.
           </label>
         </div>
         <div class="row">
+          <div class="span2">
             <button id="buttan" class="btn btn-large btn-primary" type="button">Play</button>
+          </div>
+          <div id="loading" class="span6" style="display: none">Your music is loading. Please be patient.</div>
         </div>
         <div class="pagination pagination-centered">
             <canvas id="fft" width="1024" height="150" style="visibility:hidden"></canvas>

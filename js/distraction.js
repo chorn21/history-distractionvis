@@ -34,6 +34,7 @@ DistractionVis.prototype.playAudio = function(blockCount) {
 	}
 
 	document.getElementById("concerto").play();
+	$("#loading").hide();
 	var that = this;
 	for(var i=0; i<this.averages.length; i++) (function() {
 		var value = that.averages[i];
