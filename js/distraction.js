@@ -1,12 +1,18 @@
 $(function() {
 
-	var history;
-	$.getJSON("history/chrome/output/caroline.json", function(json) {
-		history = json;
-	});
-
 	var start = processTime(history[0]);
-	var end = processTime(history[history.
+	var end = processTime(history[history.length-1]);
+	var month = document.getElementById("month");
+	var date = document.getElementById("date");
+	var year = document.getElementById("year");
+
+	var startYear = start.getFullYear();
+	var endYear = end.getFullYear();
+	while(startYear <= endYear) {
+		$(year).append('<option value="'+startYear+'">'+startYear+'</option>');
+		startYear++;
+	}
+
 	var historyPeriod = processTime(history[history.length-1]) - processTime(history[0]);
 	var songLength = 407; // length of song in seconds
 
@@ -19,18 +25,20 @@ $(function() {
 	var items = 0;
 	var distractionCount = 0;
 
-	for(var i=0; i<history.length; i++) {
-		if(processTime(history[i]) < blockEnd) {
-			items++;
-			if(history[i].distraction) {
-				distractionCount++;
+	function calculateAverages() {
+		for(var i=0; i<history.length; i++) {
+			if(processTime(history[i]) < blockEnd) {
+				items++;
+				if(history[i].distraction) {
+					distractionCount++;
+				}
 			}
-		}
-		else {
-			blockAverages[index] = distractionCount/items;
-			index++;
-			items = 1;
-			distractionCount = history[i].distraction ? 1 : 0;
+			else {
+				blockAverages[index] = distractionCount/items;
+				index++;
+				items = 1;
+				distractionCount = history[i].distraction ? 1 : 0;
+			}
 		}
 	}
 
@@ -41,7 +49,7 @@ $(function() {
 		var hour = visit.time.substring(11,13);
 		var minute = visit.time.substring(14,16);
 		var second = visit.time.substring(17, 19);
-		return new Date(year, month, date, hour, minute, second);
+		return new Date(year, month-1, date, hour, minute, second);
 	}
 
 
