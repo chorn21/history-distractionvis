@@ -17,11 +17,10 @@ $(function() {
 
 	$("#buttan").click(function() {
 		if(allHistory.checked) {
-			console.log("pizza");
-			vizzy = new DistractionVis(history, songLength, processTime(history[0]), processTime(history[history.length-1]));
+			vizzy = new DistractionVis(history, songLength, processTime(history[0]), processTime(history[history.length-1]), true);
 		}
 		else {
-			vizzy = new DistractionVis(history, songLength, new Date(startY.value, startM.value, startD.value), new Date(endY.value, endM.value, endD.value)); // for now, history object is viewable in history_data.js
+			vizzy = new DistractionVis(history, songLength, new Date(startY.value, startM.value, startD.value), new Date(endY.value, endM.value, endD.value), false); // for now, history object is viewable in history_data.js
 		}
 		vizzy.playAudio(blockCount);
 		document.getElementById("fft").style.visibility="visible";
