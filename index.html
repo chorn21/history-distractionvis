@@ -9,23 +9,10 @@
     <script src="js/spectrum_analyzer.js"></script>
     <script src="js/spectrum_analyzer_view.js"></script>
     <script src="js/url_audio_source.js"></script>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-2.3.0.min.css" />
+    <link rel="stylesheet" href="bootstrap/styling.css" />
         <meta charset="utf-8">
         <title>distractionvis</title>
-    <style>
-        body { background: #888; padding:0 2em 2em 2em; }
-        h1, h2, h3, h4, a, p { color: #ddd; font-family: 'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif; }
-        #loader { padding: 3em; display:none; }
-        #spectrum_analyzer { border: 1px solid #666; height:500px; width:1024px; display:none; }
-        #time { padding: 1em; font-family: Helvetica; color:#666;}
-        #loading { padding: 1em; }
-        #controls { display:none; clear:both; }
-        #buttons { padding-right:1em; }
-        #sliders { margin-left:2em; }
-        .slider { margin-right:1.3em; }
-        .button#play { width:4em; }
-        input[type=range] { width:10em; -webkit-appearance: none; background-color: #222; border:1px solid #666; padding:0.2em; }
-        #audioUrl { width: 500px; }
-    </style>
 </head>
 <body onload="setInterval('updateClock()', 200);">
   <div role="main">
