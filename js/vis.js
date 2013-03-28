@@ -7,12 +7,22 @@ $(function() {
 	var songLength = 407;
 	var blockCount = 40;
 
-	var y = document.getElementById("year");
-	vizzy = new DistractionVis(history, songLength); // for now, history object is viewable in history_data.js
-
-	vizzy.setUpDOM(y);
+	var startM = document.getElementById("startmonth");
+	var startD = document.getElementById("startdate");
+	var startY = document.getElementById("startyear");
+	var endM = document.getElementById("endmonth");
+	var endD = document.getElementById("enddate");
+	var endY = document.getElementById("endyear");
+	var allHistory = document.getElementById("all-history");
 
 	$("#buttan").click(function() {
+		if(allHistory.checked) {
+			console.log("pizza");
+			vizzy = new DistractionVis(history, songLength, processTime(history[0]), processTime(history[history.length-1]));
+		}
+		else {
+			vizzy = new DistractionVis(history, songLength, new Date(startY.value, startM.value, startD.value), new Date(endY.value, endM.value, endD.value)); // for now, history object is viewable in history_data.js
+		}
 		vizzy.playAudio(blockCount);
 		document.getElementById("fft").style.visibility="visible";
 	});

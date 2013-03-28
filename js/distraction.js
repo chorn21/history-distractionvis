@@ -1,21 +1,12 @@
 
-function DistractionVis(hist, songLength) {
+function DistractionVis(hist, songLength, start, end) {
 	this.history = hist;
-	this.start = processTime(this.history[0]);
-	this.end = processTime(this.history[this.history.length-1]);
+	this.start = start;
+	this.end = end;
 	this.historyPeriod = processTime(history[history.length-1]).getTime() - processTime(history[0]).getTime();
 	this.averages = [];
 	this.intervals = [];
 	this.scale = d3.scale.linear().domain([this.start.getTime(), this.end.getTime()]).range([0, songLength]);
-}
-
-DistractionVis.prototype.setUpDOM = function(year) {
-	var startYear = this.start.getFullYear();
-	var endYear = this.end.getFullYear();
-	while(startYear <= endYear) {
-		$(year).append('<option value="'+startYear+'">'+startYear+'</option>');
-		startYear++;
-	}
 }
 
 DistractionVis.prototype.playAudio = function(blockCount) {
@@ -46,7 +37,7 @@ DistractionVis.prototype.playAudio = function(blockCount) {
 	document.getElementById("concerto").play();
 	for(var i=0; i<this.averages.length; i++) {
 		setTimeout(function() {
-			var num = Math.floor(this.averages[i-1]/10)*10;
+			var num = Math.floor(this.averages[i]/10)*10;
 			document.getElementById(num).play();
 		}, waitTime);
 	}
