@@ -3,20 +3,21 @@
 <head>
     <script src="lib/dsp.js"></script>
     <script src="lib/d3.v3.js"></script>
+    <script src="js/spectrum.js"></script>
     <link rel="stylesheet" href="bootstrap/css/bootstrap-2.3.0.min.css" />
     <link rel="stylesheet" href="bootstrap/styling.css" />
     <meta charset="utf-8">
     <title>distractionvis</title>
 </head>
-<body onload="setInterval('updateClock()', 200);">
+<body onload="setInterval('updateClock()', 200); setInterval('updateSpectrum()', 100);">
     <div class="container">
         <div class="row">
-            <div id="heading">
-                <h1>listen to how productive you are</h1>
+            <div class="page-header">
+              <h1>distractEDU<small>listen to how productive you are</h1></small>
             </div>
         </div>
         <div class="row">
-            <h4>HTML5 Audio / <a href="http://d3js.org">d3.js</a></h3>
+            <h3>HTML5 Audio / <a href="http://d3js.org">d3.js</a></h3>
         </div>
         <div class="row">
             <audio id="audio-element"
@@ -27,7 +28,7 @@
             </audio>
         </div>
         <div class="row">
-            <h5>Month</h5>
+            <h4>Month</h4>
                 <select id="month">
                   <option value ="01">1</option>
                   <option value="02">2</option>
@@ -43,7 +44,7 @@
                   <option value="12">12</option>
                 </select>
 
-            <h5>Date</h5>
+            <h4>Date</h4>
                 <select id="date">
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -82,9 +83,11 @@
                 <select id="year">
                 </select>
         </div>
-        <button class="btn btn-large btn-primary" type="button">Submit</button>
         <div class="row">
-            <canvas id="fft" width="512" height="200"></canvas>
+            <button class="btn btn-large btn-primary" type="button">Submit</button>
+        </div>
+        <div class="row">
+            <canvas id="fft" width="512" height="150"></canvas>
         </div>
         <div class="row">
             <h2 id="clock"></h2>
@@ -93,7 +96,6 @@
   </div>
 </body>
 <script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="js/history_data.js"></script>
 <script type="text/javascript" src="js/distraction.js"></script>
 <script type="text/javascript" src="js/spectrum.js"></script>
 </html>
